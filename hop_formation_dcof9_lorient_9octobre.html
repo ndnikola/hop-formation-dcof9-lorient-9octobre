@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gérer une relation client difficile – HOP' Formation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vert:      #7dbdac;
+      --vert-dark: #01a3ac;
+      --marine:    #0b7c9d;
+      --orange:    #eeb652;
+      --gris-clair:#f4f6f8;
+      --gris-bord: #dde3ea;
+      --texte:     #2c3e50;
+      --blanc:     #ffffff;
+    }
+
+    body {
+      font-family: Inter, sans-serif;
+      color: var(--texte);
+      background: var(--gris-clair);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .header-brand img {
+      height: 75px;
+      width: auto;
+      display: block;
+    }
+    .header-tag {
+      background: var(--vert);
+      color: var(--blanc);
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--marine) 0%, #0a6880 100%);
+      color: var(--blanc);
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--vert);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--vert);
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .meta-pill {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .meta-pill .icon { font-size: 16px; }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ── VIDÉO ── */
+    .video-section {
+      background: var(--blanc);
+      border-radius: 12px;
+      margin: 32px auto;
+      max-width: 720px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .video-header {
+      background: var(--vert);
+      color: var(--blanc);
+      padding: 14px 24px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    /* Portrait YouTube : ratio 9:16 → on centre dans un carré raisonnable */
+    .video-wrapper.portrait {
+      padding-bottom: 0;
+      height: 480px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+    }
+    .video-wrapper.portrait iframe {
+      height: 480px;
+      width: 270px;
+      border: none;
+    }
+    .video-caption {
+      padding: 14px 24px;
+      font-size: 14px;
+      color: #6b7c93;
+      border-top: 1px solid var(--gris-bord);
+    }
+
+    /* ── OBJECTIFS ── */
+    .section-card {
+      background: var(--blanc);
+      border-radius: 12px;
+      margin: 0 auto 24px;
+      max-width: 720px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .section-card-header {
+      padding: 16px 24px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      border-bottom: 1px solid var(--gris-bord);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-card-header .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--vert);
+      flex-shrink: 0;
+    }
+    .section-card-body { padding: 20px 24px; }
+
+    .objectifs-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .objectifs-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+    }
+    .objectifs-list li::before {
+      content: '✓';
+      color: var(--vert);
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── PROGRAMME ── */
+    .programme-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .programme-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--gris-bord);
+      padding: 14px 0;
+    }
+    .programme-item:last-child { border-bottom: none; }
+    .programme-time {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--vert);
+      padding-top: 2px;
+    }
+    .programme-content strong {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .programme-content span {
+      font-size: 13px;
+      color: #6b7c93;
+    }
+    .programme-badge {
+      display: inline-block;
+      background: var(--gris-clair);
+      border: 1px solid var(--gris-bord);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--marine);
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .programme-badge.pause {
+      background: #fff3e0;
+      border-color: #ffd180;
+      color: #b26000;
+    }
+
+    /* ── INFOS PRATIQUES ── */
+    .infos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 480px) { .infos-grid { grid-template-columns: 1fr; } }
+    .info-item {
+      background: var(--gris-clair);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .info-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .info-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #8a9bb0;
+      margin-bottom: 4px;
+    }
+    .info-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--marine);
+    }
+
+    /* ── QUESTIONNAIRE ── */
+    .questionnaire-header {
+      background: linear-gradient(135deg, var(--orange) 0%, #e05a1a 100%);
+    }
+    .form-section-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--vert);
+      margin: 20px 0 14px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--vert);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--marine);
+      margin-bottom: 6px;
+    }
+    .label-hint {
+      font-weight: 400;
+      font-size: 12px;
+      color: #8a9bb0;
+      margin-left: 4px;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1.5px solid var(--gris-bord);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      color: var(--texte);
+      background: var(--blanc);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--vert);
+      box-shadow: 0 0 0 3px rgba(45,184,122,0.12);
+    }
+    textarea { resize: vertical; min-height: 90px; }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--gris-bord);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .radio-option:hover { background: #f0faf5; border-color: var(--vert); }
+    .radio-option input { accent-color: var(--vert); width: 16px; height: 16px; flex-shrink: 0; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--vert);
+      color: var(--blanc);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-submit:hover { background: var(--vert-dark); transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+
+    .success-msg {
+      display: none;
+      background: #e8faf2;
+      border: 1.5px solid var(--vert);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .success-msg h3 {
+      font-family: 'Poppins', sans-serif;
+      color: var(--vert-dark);
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .success-msg p { font-size: 14px; color: #2c6e4a; }
+
+    footer {
+      background: var(--marine);
+      color: rgba(255,255,255,0.6);
+      padding: 40px 24px 28px;
+      margin-top: 40px;
+    }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .footer-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .footer-col-center { text-align: center; }
+    .footer-col-right { text-align: right; }
+    @media (max-width: 600px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+      .footer-col-right { text-align: left; }
+    }
+
+    /* ── NOTICE GDPR ── */
+    .gdpr-notice {
+      font-size: 12px;
+      color: #8a9bb0;
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: var(--gris-clair);
+      border-radius: 6px;
+      border-left: 3px solid var(--gris-bord);
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 32px 16px 28px; }
+      .section-card-body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-brand">
+    <img src="https://www.hopformation.com/wph/wp-content/uploads/2025/11/Logo-HOPFormation.png" alt="HOP' Formation">
+  </div>
+  <div class="header-tag">Formation professionnelle</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Formation inter-entreprises · Réf. DCOF9</div>
+  <h1>Gérer une relation<br><em>client difficile</em></h1>
+  <div class="hero-meta">
+    <div class="meta-pill"><span class="icon">📅</span> 9 octobre 2026</div>
+    <div class="meta-pill"><span class="icon">📍</span> Lorient – St Joseph La Salle</div>
+    <div class="meta-pill"><span class="icon">🕘</span> 9h00 – 17h00</div>
+    <div class="meta-pill"><span class="icon">👥</span> Inter-entreprises</div>
+  </div>
+</div>
+
+<!-- VIDÉO -->
+<div class="video-section container" style="padding:0;">
+  <div class="video-header">
+    <span>▶</span> Message de votre formateur
+  </div>
+  <div class="video-wrapper portrait">
+    <iframe
+      width="270"
+      height="480"
+      src="https://www.youtube.com/embed/uFahyvx5wDs?si=jQ63vY9TuVM5jGi5"
+      title="Message de votre formateur"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div class="video-caption">
+    Votre formateur · HOP' Formation
+  </div>
+</div>
+
+<!-- OBJECTIFS -->
+<div class="section-card container" style="padding:0;">
+  <div class="section-card-header">
+    <div class="dot"></div>
+    Objectifs de la journée
+  </div>
+  <div class="section-card-body">
+    <ul class="objectifs-list">
+      <li>Identifier les comportements déclencheurs de tension dans la relation client</li>
+      <li>Adopter une posture adaptée face à un client agressif, insatisfait ou de mauvaise foi</li>
+      <li>Utiliser des techniques de communication pour désamorcer les conflits</li>
+      <li>Transformer une relation difficile en opportunité de fidélisation</li>
+      <li>Repartir avec des outils directement applicables à vos situations réelles</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROGRAMME -->
+<div class="section-card container" style="padding:0;">
+  <div class="section-card-header">
+    <div class="dot"></div>
+    Programme de la journée
+  </div>
+  <div class="section-card-body">
+    <div class="programme-grid">
+      <div class="programme-item">
+        <div class="programme-time">9h00</div>
+        <div class="programme-content">
+          <strong>Accueil et tour de table</strong>
+          <span>Présentation, attentes, règles du jeu</span>
+        </div>
+      </div>
+      <div class="programme-item">
+        <div class="programme-time">9h30</div>
+        <div class="programme-content">
+          <strong>Comprendre la relation client difficile</strong>
+          <span>Typologies de clients, mécanismes de tension, auto-diagnostic</span>
+          <div><span class="programme-badge">Apport + échanges</span></div>
+        </div>
+      </div>
+      <div class="programme-item">
+        <div class="programme-time">11h00</div>
+        <div class="programme-content">
+          <strong>Les outils de désamorçage</strong>
+          <span>Écoute active, reformulation, ancrage émotionnel</span>
+          <div><span class="programme-badge">Mise en situation</span></div>
+        </div>
+      </div>
+      <div class="programme-item">
+        <div class="programme-time">12h30</div>
+        <div class="programme-content">
+          <strong>Pause déjeuner</strong>
+          <span>Repas libre aux alentours</span>
+          <div><span class="programme-badge pause">Pause</span></div>
+        </div>
+      </div>
+      <div class="programme-item">
+        <div class="programme-time">13h30</div>
+        <div class="programme-content">
+          <strong>Mises en situation sur vos cas réels</strong>
+          <span>Jeux de rôle, débriefing collectif</span>
+          <div><span class="programme-badge">Pratique</span></div>
+        </div>
+      </div>
+      <div class="programme-item">
+        <div class="programme-time">15h30</div>
+        <div class="programme-content">
+          <strong>Transformer la difficulté en opportunité</strong>
+          <span>Fidélisation, posture commerciale positive</span>
+          <div><span class="programme-badge">Apport + exercices</span></div>
+        </div>
+      </div>
+      <div class="programme-item">
+        <div class="programme-time">16h30</div>
+        <div class="programme-content">
+          <strong>Synthèse et plan d'action individuel</strong>
+          <span>3 engagements concrets à mettre en œuvre dès demain</span>
+        </div>
+      </div>
+      <div class="programme-item">
+        <div class="programme-time">17h00</div>
+        <div class="programme-content">
+          <strong>Fin de la journée</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFOS PRATIQUES -->
+<div class="section-card container" style="padding:0;">
+  <div class="section-card-header">
+    <div class="dot"></div>
+    Informations pratiques
+  </div>
+  <div class="section-card-body">
+    <div class="infos-grid">
+      <div class="info-item">
+        <div class="info-icon">📅</div>
+        <div>
+          <div class="info-label">Date</div>
+          <div class="info-value">Vendredi 9 octobre 2026</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🕘</div>
+        <div>
+          <div class="info-label">Horaires</div>
+          <div class="info-value">9h00 – 12h30 / 13h30 – 17h00</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Lieu</div>
+          <div class="info-value">Ensemble Scolaire St Joseph La Salle</div>
+          <div style="font-size:12px;color:#6b7c93;margin-top:2px;">42 rue de Kerguestenen, 56100 Lorient – Salle A14</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🍽️</div>
+        <div>
+          <div class="info-label">Repas</div>
+          <div class="info-value">Déjeuner libre (non fourni)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CARTE -->
+<div class="section-card container" style="padding:0; margin-bottom:24px;">
+  <div class="section-card-header">
+    <div class="dot"></div>
+    Accès – Ensemble Scolaire St Joseph La Salle
+  </div>
+  <div style="padding: 16px 24px 12px;">
+    <p style="font-size:14px;color:#6b7c93;margin-bottom:4px;">
+      📍 <strong style="color:var(--marine);">42 rue de Kerguestenen, 56100 Lorient</strong>
+    </p>
+    <p style="font-size:13px;color:#6b7c93;">
+      Entrée par l'accueil général « St Jo ». Stationnement à côté du bâtiment d'accueil administratif (barrière levée sur la droite). Salle A14, toilettes et point d'eau à proximité directe.
+    </p>
+  </div>
+  <div style="overflow:hidden; border-radius: 0 0 12px 12px; height: 260px;">
+    <iframe
+      title="Carte Ensemble Scolaire St Joseph La Salle Lorient"
+      width="100%"
+      height="260"
+      style="border:0; display:block;"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://maps.google.com/maps?q=42+rue+de+Kerguestenen,+56100+Lorient&output=embed&z=16">
+    </iframe>
+  </div>
+</div>
+
+<!-- QUESTIONNAIRE -->
+<div class="section-card container" style="padding:0; margin-bottom: 40px;">
+  <div class="section-card-header questionnaire-header" style="color:#fff; background: linear-gradient(135deg, var(--orange) 0%, #e05a1a 100%); border-radius: 12px 12px 0 0;">
+    <span>📋</span>
+    Questionnaire amont – 5 minutes
+  </div>
+  <div class="section-card-body">
+    <p style="font-size:14px; color:#6b7c93; margin-bottom:20px;">
+      Pour que cette journée soit utile <strong>pour vous</strong>, j'ai besoin de vous connaître un peu avant. Vos réponses restent confidentielles et ne servent qu'à préparer la journée.
+    </p>
+
+    <form id="form" novalidate>
+
+      <!-- BLOC 1 -->
+      <div class="form-section-title">1 · Votre contexte</div>
+
+      <div class="form-group">
+        <label for="nom">Prénom et nom <span style="color:var(--orange)">*</span></label>
+        <input type="text" id="nom" name="nom" placeholder="Ex : Marie Dupont" required />
+      </div>
+
+      <div class="form-group">
+        <label for="poste">Votre poste / fonction</label>
+        <input type="text" id="poste" name="poste" placeholder="Ex : Responsable accueil, Chargée de clientèle..." />
+      </div>
+
+      <div class="form-group">
+        <label for="entreprise">Votre entreprise / structure</label>
+        <input type="text" id="entreprise" name="entreprise" placeholder="Ex : Institut Clarins, CRC Bretagne..." />
+      </div>
+
+      <div class="form-group">
+        <label for="anciennete">Depuis combien de temps êtes-vous dans ce poste ?</label>
+        <select id="anciennete" name="anciennete">
+          <option value="">-- Choisir --</option>
+          <option>Moins de 6 mois</option>
+          <option>6 mois à 2 ans</option>
+          <option>2 à 5 ans</option>
+          <option>Plus de 5 ans</option>
+        </select>
+      </div>
+
+      <!-- BLOC 2 -->
+      <div class="form-section-title">2 · Votre expérience terrain</div>
+
+      <div class="form-group">
+        <label>À quelle fréquence rencontrez-vous des situations de relation client difficile ?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="frequence" value="rarement"> Rarement (quelques fois par an)</label>
+          <label class="radio-option"><input type="radio" name="frequence" value="parfois"> Parfois (quelques fois par mois)</label>
+          <label class="radio-option"><input type="radio" name="frequence" value="souvent"> Souvent (plusieurs fois par semaine)</label>
+          <label class="radio-option"><input type="radio" name="frequence" value="quotidien"> Quasi-quotidiennement</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="situation">Décrivez une situation difficile récente (sans nommer les personnes) <span class="label-hint">– facultatif mais très utile</span></label>
+        <textarea id="situation" name="situation" placeholder="Ex : Un client mécontent d'un bon cadeau non remboursable, qui montait le ton..."></textarea>
+      </div>
+
+      <!-- BLOC 3 -->
+      <div class="form-section-title">3 · Vos attentes</div>
+
+      <div class="form-group">
+        <label for="attente">Ce que vous voulez vraiment travailler pendant cette journée</label>
+        <textarea id="attente" name="attente" placeholder="Ex : Garder mon calme quand un client crie. Trouver quoi dire quand je suis pris par surprise..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Avez-vous déjà suivi une formation sur ce sujet ?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="formation_deja" value="non"> Non, c'est une première</label>
+          <label class="radio-option"><input type="radio" name="formation_deja" value="oui_ancien"> Oui, il y a longtemps</label>
+          <label class="radio-option"><input type="radio" name="formation_deja" value="oui_recent"> Oui, récemment</label>
+        </div>
+      </div>
+
+      <!-- BLOC 4 -->
+      <div class="form-section-title">4 · Informations pratiques</div>
+
+      <div class="form-group">
+        <label for="email">Votre email <span class="label-hint">– pour vous envoyer les supports après la journée</span></label>
+        <input type="email" id="email" name="email" placeholder="prenom@exemple.fr" />
+      </div>
+
+      <div class="form-group">
+        <label for="contrainte">Une contrainte ou information utile à connaître avant la journée ? <span class="label-hint">– facultatif</span></label>
+        <textarea id="contrainte" name="contrainte" style="min-height:70px;" placeholder="Ex : je dois partir à 16h30, je suis malentendant, je préfère éviter les jeux de rôle..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <span>Envoyer mes réponses</span>
+        <span>→</span>
+      </button>
+
+      <div class="gdpr-notice">
+        Vos réponses sont utilisées uniquement pour préparer la journée de formation du 9 octobre 2026. Elles ne sont pas partagées à des tiers.
+      </div>
+
+      <div class="success-msg" id="success">
+        <h3>✓ Questionnaire reçu !</h3>
+        <p>Merci. Vos réponses ont été transmises.<br>La formation se tiendra le <strong>9 octobre 2026</strong> à l'<strong>Ensemble Scolaire St Joseph La Salle, Lorient</strong>, de 9h00 à 17h00.</p>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-col">
+      <img src="https://www.hopformation.com/wph/wp-content/uploads/2025/11/Logo-HOPFormation-Copie.png"
+           alt="HOP' Formation" style="height:60px;margin-bottom:16px;display:block;">
+      <p style="font-size:13px;line-height:1.8;color:rgba(255,255,255,0.75);">
+        <strong style="color:#fff;">HOP'Formation</strong><br>
+        11, rue Charles Coulomb<br>
+        22950 Trégueux<br>
+        <a href="mailto:contact@hopformation.com">contact@hopformation.com</a><br>
+        <a href="tel:0296615822">02 96 61 58 22</a>
+      </p>
+    </div>
+
+    <div class="footer-col footer-col-center">
+      <img src="https://www.hopformation.com/wph/wp-content/uploads/2024/12/Logo-Qualiopi-1024x1024.png"
+           alt="Qualiopi" style="height:80px;width:auto;">
+    </div>
+
+    <div class="footer-col footer-col-right">
+      <p style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">Nos réseaux sociaux</p>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;">
+        <a href="https://www.linkedin.com/company/hop-formation" target="_blank" rel="noopener"
+           style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;">LinkedIn</a>
+        <a href="https://www.instagram.com/hopformation/" target="_blank" rel="noopener"
+           style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;">Instagram</a>
+        <a href="https://www.facebook.com/people/HOPFormation/61574180511352/" target="_blank" rel="noopener"
+           style="color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;">Facebook</a>
+      </div>
+      <nav style="display:flex;flex-direction:column;gap:6px;">
+        <a href="https://www.hopformation.com/contact/">Contact</a>
+        <a href="https://www.hopformation.com/informations-legales/">Informations légales</a>
+        <a href="https://www.hopformation.com/sitemap_index.xml" target="_blank">Plan du site</a>
+      </nav>
+    </div>
+
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,0.15);margin-top:28px;padding-top:16px;font-size:12px;color:rgba(255,255,255,0.45);text-align:center;">
+    © 2026 HOP' Formation – Tous droits réservés
+  </div>
+</footer>
+
+<script>
+  document.getElementById('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var nom = document.getElementById('nom').value.trim();
+    if (!nom) {
+      document.getElementById('nom').style.borderColor = '#e53e3e';
+      document.getElementById('nom').focus();
+      return;
+    }
+    fetch('https://script.google.com/macros/s/AKfycbxklb8CR_sZmfzdiwEw3hyzJsJuWliPhnvoOn5fWbKk-3kOCHzUcUBI3c2NI1_bS_Mo/exec', {
+      method: 'POST',
+      body: new FormData(this)
+    });
+    document.getElementById('success').style.display = 'block';
+    document.querySelector('.btn-submit').style.display = 'none';
+    document.getElementById('success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+</script>
+
+</body>
+</html>
